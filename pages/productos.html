@@ -39,8 +39,56 @@
     <!--------------------------------------------------- Fin de Header ---------------------------------->
     <main>
         <section class="container-fluid" id="catalogo">
-            <div>Categorias</div>
-            <div id="productos">Productos</div>
+            <div id="filtros">
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                    <option selected>Categorias</option>
+                    <option value="1">naruto</option>
+                    <option value="2">dragonball</option>
+                    <option value="3">onepiece</option>
+                </select>
+                
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>Ordenar por</option>
+                    <option value="1">Precio</option>
+                    <option value="2">Nombre</option>
+                    
+                </select>
+            </div>
+            <div id="productos" class="row"></div>
+
+            <!-- Boton sticky del carrito -->
+            <img  class="sticky modal-carrito"data-bs-toggle="modal" data-bs-target="#exampleModal" 
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHuKTE-ieefw2aN8wJ8GI7QlwNUSfB3DHq2A&usqp=CAU" alt="" data-bs-toggle="modal" 
+            data-bs-target="#exampleModal">
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Carrito</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="row border-bottom mb-3">
+                                <div class="col-5 centrar border">Producto</div>
+                                <div class="col-3 centrar border">Cantidad</div>
+                                <div class="col-2 centrar border">$</div>
+                            </div>
+                            <div class="carrito mb-5"></div>
+                            <div class="row mb-5">
+                                <div class="col-4 text-primary  fs-2">total</div>
+                                <div class="col-4 total text-primary fs-2"></div>
+                                <button class="btn btn-danger col-4 btn-vaciar">Vaciar</button>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <div class="text-danger-emphasis txt-desconectado"> Debes iniciar sesion para poder comprar</div>
+                            <button type="button" class="btn btn-primary" id="comprar" >Comprar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 

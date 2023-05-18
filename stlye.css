@@ -16,3 +16,26 @@
     text-align: center;
 }
 
+.sticky{
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    bottom: 10%;
+    right: 0;
+    border: solid red;
+    border-radius: 100px;
+    
+}
+
+.sticky:hover{
+    height: 150px;
+    width: 150px;
+}
+
+.card-img-top{
+    height: 200px;
+}
+
+.img-mini{
+    height: 50px;
+}
