@@ -330,6 +330,12 @@ if(document.querySelector(".carrito")!=null){
     })
 }
 
+/* Boton Comprar */
+const btnComprar= document.querySelector("#comprar")
+btnComprar.addEventListener("click", e=>{
+    comprar()
+})
+
 /* Carrito modal para el index y el  catalogo */
 if(document.querySelector(".modal-carrito")!=null){
     const carro=document.querySelector(".modal-carrito")
@@ -364,7 +370,15 @@ function agregarCarrito(element){
     
     carritoJson=JSON.stringify(carrito)
     localStorage.setItem("carrito", carritoJson)
-    console.log(carrito)
+    
+}
+
+
+function comprar(){
+    alert(`Gracias por haber comprando. Dentro de los proximos 5 dias habiles su pedido estara en su casa`)
+    carrito=[]
+    localStorage.removeItem("carrito")
+    mostrarCarrito()
 }
 /*==============================================================================================================
 FIN CODIGO CARRITO
