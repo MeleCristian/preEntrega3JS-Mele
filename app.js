@@ -333,7 +333,7 @@ if(document.querySelector(".carrito")!=null){
 /* Boton Comprar */
 const btnComprar= document.querySelector("#comprar")
 btnComprar.addEventListener("click", e=>{
-    comprar()
+    comprar();
 })
 
 /* Carrito modal para el index y el  catalogo */
