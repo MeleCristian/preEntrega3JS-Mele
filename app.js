@@ -75,7 +75,18 @@ var usuarios=[
     }
 ]
 
-var carrito=[{nombre:"lala",precio:1500,cantidad:2,total:3000, imagen:"https://i.blogs.es/6f076c/naruto/840_560.jpeg"}, {nombre:"lolo",precio:1500,cantidad:2,total:3000, imagen:"https://i.blogs.es/6f076c/naruto/840_560.jpeg"}]
+
+
+let carritoJson=localStorage.getItem("carrito")
+let carrito
+if(carritoJson==null){
+    carrito = []
+}else{
+    carrito = JSON.parse(carritoJson)
+}
+
+
+
 function setearUsuario(){
     const usuarioConectado=document.querySelector(".nav-loggin")
     if(sessionStorage.getItem("usuario")!=null){
@@ -228,23 +239,21 @@ INICIO CODIGO CARRITO
 function mostrarCarrito(){
     const mostrarCarrito=document.querySelector(".carrito")
     mostrarCarrito.innerHTML=' '
-    carrito.forEach(e =>{
-        mostrarCarrito.innerHTML+=` <div class="row mb-1">
-                                    <img class="col-2 img-mini" src="${e.imagen}">
-                                    <div class="col-3 nombre">${e.nombre}</div>
-                                    <button class="btn btn-danger col-1 btn-restar">-</button>
-                                    <div class="col-1 centrar cantidad">${e.cantidad}</div>
-                                    <button class="btn btn-success col-1 btn-sumar">+</button>
-                                    <div class="col-2 centrar">${e.total}</div>
-                                    <button class="btn btn-danger col-2 btn-eliminar">Eliminar</button>                                    
-                                    </div>`
-    })
     const total= document.querySelector(".total")
-    if(carrito.length==0){
+    if(carrito==null){
         total.innerHTML= "Carrito vacio agregue productos!"
     }else{
         var suma=0
         carrito.forEach(e=>{
+            mostrarCarrito.innerHTML+=` <div class="row mb-1">
+                                        <img class="col-2 img-mini" src="${e.imagen}">
+                                        <div class="col-3 nombre">${e.nombre}</div>
+                                        <button class="btn btn-danger col-1 btn-restar">-</button>
+                                        <div class="col-1 centrar cantidad">${e.cantidad}</div>
+                                        <button class="btn btn-success col-1 btn-sumar">+</button>
+                                        <div class="col-2 centrar">${e.total}</div>
+                                        <button class="btn btn-danger col-2 btn-eliminar">Eliminar</button>                                    
+                                        </div>`
             suma+=e.total
         })
         total.innerHTML= suma
@@ -261,6 +270,8 @@ function eliminarDelCarrito(element){
             carrito.splice(index,1)
         }
     })
+    carritoJson=JSON.stringify(carrito)
+    localStorage.setItem("carrito", carritoJson)
     mostrarCarrito()
 }
 
@@ -289,6 +300,8 @@ function sumaResta(element, a){
             })
         }
     }
+    carritoJson=JSON.stringify(carrito)
+    localStorage.setItem("carrito", carritoJson)
     mostrarCarrito();
     
 }
@@ -311,6 +324,8 @@ if(document.querySelector(".carrito")!=null){
     const vaciar= document.querySelector(".btn-vaciar")
     vaciar.addEventListener("click", e=>{
         carrito=[]
+        carritoJson=JSON.stringify(carrito)
+        localStorage.setItem("carrito", carritoJson)
         mostrarCarrito()
     })
 }
@@ -322,6 +337,35 @@ if(document.querySelector(".modal-carrito")!=null){
         mostrarCarrito()
     })
 }
+
+
+/* Funcion agragar al carrito */
+function agregarCarrito(element){
+    var aux=true
+    const nombreElemento=element.querySelector(".card-title").textContent
+    const precioElemento=Number(element.querySelector(".card-text").textContent)
+    if(carrito!=null){
+        carrito.forEach(e =>{
+        if(e.nombre==nombreElemento){
+            e.cantidad++
+            e.total+=precioElemento
+            aux=false
+        }
+    })
+    if(aux){
+        let productoAgregar={ nombre:nombreElemento,
+                            precio:precioElemento,
+                            cantidad:1,
+                            total:precioElemento,
+                            imagen:element.querySelector(".url-img").textContent}
+        carrito.push(productoAgregar)
+    }
+    }
+    
+    carritoJson=JSON.stringify(carrito)
+    localStorage.setItem("carrito", carritoJson)
+    console.log(carrito)
+}
 /*==============================================================================================================
 FIN CODIGO CARRITO
 ================================================================================================================ */
@@ -331,6 +375,7 @@ FIN CODIGO CARRITO
 INICIO CODIGO PRODUCTOS
 ================================================================================================================ */
 if(document.querySelector("#catalogo")!=null){
+    habilitarCompra()
     const produ= document.querySelector("#productos")
     productos.forEach(e =>{
         produ.innerHTML+=`<div class="card m-3 col-4 p-1" style="width: 18rem;">
@@ -350,32 +395,9 @@ if(document.querySelector("#catalogo")!=null){
             agregarCarrito(e.target.parentElement)
         }
     })
-
-   
 }
 
-function agregarCarrito(element){
-    var aux=true
-    const nombreElemento=element.querySelector(".card-title").textContent
-    const precioElemento=Number(element.querySelector(".card-text").textContent)
-    
-    carrito.forEach(e =>{
-        if(e.nombre==nombreElemento){
-            e.cantidad++
-            e.total+=precioElemento
-            aux=false
-        }
-    })
-    if(aux){
-        let productoAgregar={ nombre:nombreElemento,
-                            precio:precioElemento,
-                            cantidad:1,
-                            total:precioElemento,
-                            imagen:element.querySelector(".url-img").textContent}
-        carrito.push(productoAgregar)
-    }
-    
-}
+
 /*==============================================================================================================
 FIN CODIGO PRODUCTOS
 ================================================================================================================ */
