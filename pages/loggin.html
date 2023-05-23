@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Link Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Link JS -->
+    <link rel="stylesheet" href="../app.js">
+    <!-- Link de CSS -->
+    <link rel="stylesheet" href="../stlye.css">
+</head>
+
+<body>
+    <!-------------------------- Inicio de  Header --------------------------------->
+    <header class="sticky-top">
+        <h1 class="centrar">3D Printer Store</h1>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse flex" id="navbarNavAltMarkup">
+                <div class="navbar-nav positio-nav">
+                <a class="nav-link color-txt" href="../index.html">Inicio</a>
+                <a class="nav-link color-txt" href="./productos.html">Productos</a>
+                <a class="nav-link nav-loggin color-txt" href="./loggin.html">Loggin</a>
+                </div>
+            </div>
+            </div>
+        </nav>
+        </header>
+    <!--------------------------------------------------- Fin de Header ---------------------------------->
+
+
+    <main>
+        <section class="container-fluid row" id="loggout">
+            <div class="info col-4 centrar">Inicia secion para poder realizar tus compras, si no tienes un usuario  crea uno nuevo, solo te tomara unos segundos    </div>
+            <div class="login col-6">
+                <!------------------ Inicio Form Validador de usuario ------------------------->
+                <form id="form-iniciar-sesion">
+                    <label >Usuario</label>
+                    <input type="text" class="form-control iniciar-mail" >
+                    <label class="mt-5">Contraseña</label>
+                    <input type="password" class="form-control iniciar-pass">
+                    <button type="submit" class="btn btn-primary iniciar-sesion mt-5">iniciar Sesion</button>
+                    <!-- Boton para crear usuario y su modal respectivo -->
+                    <button type="submit" class="btn btn-success mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+                    <div class="oculto text-danger-emphasis" id="error">Usuario o contrasenia incorrectos.Vuelva a intentarlo</div>
+                </form>
+                <!------------------ Final form Validador de usuario ---------------------------------->
+
+
+                    <!-- inicio pop up para registrarse ---------------------------------------------------------------------------->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear usuario</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </did>
+                                <!---------------------- Inicio Form para crear usuario ------------------------------------------->
+                                <div class="modal-body">                                    
+                                    <form id="form-crear-usuario">
+                                        <label >Usuario</label>
+                                        <input type="email" class="form-control crear-mail" id="crear-mail" aria-describedby="emailHelp">
+                                        <label >Constraseña</label>
+                                        <input type="password" class="form-control crear-pass" id="crear-pass">
+                                        <button type="button" class="btn btn-secondary mt-3" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary crear-usuario mt-3">Crear</button>
+                                        
+                                    </form>
+                                    <!--------------------------------- Final form para crear usuario ----------------------------------->
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--------------------------- Final pop up para registrarse--------------------------------------------------- -->
+            </div>
+        </section>
+        <section class="container-fluid oculto" id="loggin">
+            <div id="bienvenida" class="centrar fs-1 mb-5"></div>
+            
+            <div class="row border-bottom mb-3">
+                <div class="col-5 centrar border">Producto</div>
+                <div class="col-3 centrar border">Cantidad</div>
+                <div class="col-2 centrar border">$</div>
+            </div>
+            <div class="carrito mb-5"></div>
+            <div class="row mb-5">
+                <div class="col-4 text-primary  fs-2">total</div>
+                <div class="col-4 total text-primary fs-2"></div>
+                <button class="btn btn-danger col-4 btn-vaciar">Vaciar</button>
+            </div>
+            <div class="row">
+                <div class="text-danger-emphasis txt-desconectado"> Debes iniciar sesion para poder comprar</div>
+                <button class="btn btn-danger col-4 m-2" id="desconectar">DESCONECTAR</button>
+                <button class="btn btn-danger col-4 m-2" id="comprar">COMPRAR</button>
+                
+            </div>
+            
+
+            
+            
+        </section>
+    </main>
+
+
+    
+    <!-- Script Boostrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+    crossorigin="anonymous"></script>
+    <!-- Script JS -->
+    <script src="../app.js"></script>
+</body>
+</html>
