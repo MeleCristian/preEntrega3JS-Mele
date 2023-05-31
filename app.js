@@ -75,7 +75,7 @@ const ordenarProductos=async(ordenar,categorias)=>{
 }
 
 const obtenerJson= async()=>{
-    const resp=await fetch("/data.json")
+    const resp=await fetch("https://melecristian.github.io/preEntrega3JS-Mele/data.json")
     const data= await resp.json()
     usuarios=[...data.usuarios]
     productos=[...data.productos]
