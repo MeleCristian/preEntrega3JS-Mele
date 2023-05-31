@@ -81,6 +81,7 @@ const obtenerJson= async()=>{
     productos=[...data.productos]
     
 }
+obtenerJson()
 
 
 let carritoJson=localStorage.getItem("carrito")
@@ -267,8 +268,12 @@ function mostrarCarrito(){
         })
         total.innerHTML= suma
     }
+    
     const numeroCarrito=document.querySelector(".cantCarrito")
-    numeroCarrito.innerHTML=cantProductos
+    if(numeroCarrito!=null){
+        numeroCarrito.innerHTML=cantProductos
+    }
+    
 }
 
 
