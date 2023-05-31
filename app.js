@@ -1,81 +1,88 @@
-var productos=[
-    {
-        nombre:"naruto" ,
-        categorias:"naruto",
-        precio: 12000,
-        imagen:"https://media.sketchfab.com/models/93174ca7b0bb4f2d8ddf00021854f2cb/thumbnails/ad762fd30c89458bba7ca4a8a67e3032/515eb1f466794bd186244eea8157e1d7.jpeg"
-    } ,
-    {
-        nombre:"sasuke" ,
-        categorias:"naruto",
-        precio: 7000,
-        imagen:"https://img1.cgtrader.com/items/4068141/159d5fd3a7/large/sasuke-uchiha-from-battle-with-itachi-3d-model-159d5fd3a7.jpg"
-    },
-    {
-        nombre:"kakashi" ,
-        categorias:"naruto",
-        precio: 8800,
-        imagen:"https://img1.cgtrader.com/items/2659360/3b8b8f950e/large/kakashi-hatake-from-naruto-3d-model-stl.jpg"
-    },
-    {
-        nombre:"goku" ,
-        categorias:"dragonball",
-        precio: 10000,
-        imagen:"https://i.ebayimg.com/images/g/McYAAOSwg5ZkDDTm/s-l1600.jpg"
-    },
-    {
-        nombre:"vegeta" ,
-        categorias:"dragonball",
-        precio: 8000,
-        imagen: "https://cdn.meshplorer.com/media/25/35/78/975ac89eaad70e3be343a5c6a7.jpg"
-    },
-    {
-        nombre:"gohan" ,
-        categorias:"dragonball",
-        precio: 7800,
-        imagen:"https://i.pinimg.com/736x/f4/5c/2b/f45c2b1d98bb0b7787979b6011e7cb51.jpg"
-    },
-    {
-        nombre:"luffy" ,
-        categorias:"onepiece",
-        precio: 8500,
-        imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbmCm38TORJCwNwxB9MnR5BQUXpUK_E1hE1g&usqp=CAU"
-    },
-    {
-        nombre:"zoro" ,
-        categorias:"onepiece",
-        precio: 6300,
-        imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVFVHH7lfXy0xrXkuMtafZ8UG5B-FFVq65ew&usqp=CAU"
-    },
-    {
-        nombre:"sanji" ,
-        categorias:"onepiece",
-        precio: 4800,
-        imagen:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRUOJJouub8j_WJgw2MbuIWdCRdGtcQwZcWA&usqp=CAU"
-    }
+let productos  =[]
+let usuarios=[]
+
+const mostrarProductos=async()=>{
+    const resp=await fetch("/data.json")
+    const data= await resp.json()
+    productos=[...data.productos]
+    mostrarProductosxArray(productos)
     
-]
-const productosOriginales= [... productos]
-
-var usuarios=[
-    {
-        usuario:"cristian" ,
-        password:"ddd"
-    },
-    {
-        usuario:"omar" ,
-        password:"omar"
-    },
-    {
-        usuario:"ricardo" ,
-        password:"1234"
-    },
-    {
-        usuario:"daniela" ,
-        password:"dani"
+}
+const ordenarProductos=async(ordenar)=>{
+    switch(ordenar){
+        case "PrecioAs":
+            productos.sort((a,b)=>{
+                return a.precio-b.precio
+            })
+            break;
+        case "PrecioDes":
+            productos.sort((a,b)=>{
+                return b.precio-a.precio
+            })
+            break;
+        case "NombreAs":
+            productos.sort((a,b)=>{
+                if(a.nombre<b.nombre){return -1}
+                if(a.nombre>b.nombre){return 1}
+                return 0
+                
+            })
+            break;
+        case "NombreDes":
+            productos.sort((a,b)=>{
+                if(a.nombre<b.nombre){return 1}
+                if(a.nombre>b.nombre){return -1}
+                return 0
+                
+            })
+            break;
+        default:
+            break;
     }
-]
-
+    console.log(productos)
+    mostrarProductosxArray(productos)
+}
+const filtrarCategorias=async(categoria)=>{
+    console.log(productos)
+    switch(categoria){
+        case "naruto":
+            obtenerJson()
+            productos=productos.filter(e=>{
+                if(e.categorias=="naruto")
+                { return true}
+            })
+            break;
+        case "one piece":
+            obtenerJson()
+            productos=productos.filter(e=>{
+                if(e.categorias=="onepiece")
+                { return true}
+            })
+            break;
+        case "dragon ball":
+            obtenerJson()
+            productos=productos.filter(e=>{
+                if(e.categorias=="dragonball")
+                { return true}
+            })
+            break;
+        case "categorias":
+            obtenerJson()
+        default:
+            break;
+    }
+    console.log(productos)
+    mostrarProductosxArray(productos)
+    /* obtenerJson() */
+    
+}
+const obtenerJson= async()=>{
+    const resp=await fetch("/data.json")
+    const data= await resp.json()
+    usuarios=[...data.usuarios]
+    productos=[...data.productos]
+    
+}
 
 
 let carritoJson=localStorage.getItem("carrito")
@@ -86,8 +93,7 @@ if(carritoJson==null){
     carrito = JSON.parse(carritoJson)
 }
 
-
-
+/* Mostrar usuario en el nav */
 function setearUsuario(){
     const usuarioConectado=document.querySelector(".nav-loggin")
     if(sessionStorage.getItem("usuario")!=null){
@@ -98,6 +104,7 @@ function setearUsuario(){
 }
 setearUsuario()
 habilitarCompra()
+/* Habilita la compra si hay un usuario conectado */
 function habilitarCompra(){
     const textoDesconectado= document.querySelector(".txt-desconectado")
     const botonComprar=document.querySelector("#comprar")
@@ -395,6 +402,7 @@ if(document.querySelector("#catalogo")!=null){
     habilitarCompra()
     mostrarProductos()
     
+    
     const clickComprar= document.querySelector("#productos")
     clickComprar.addEventListener("click", e=>{
         
@@ -415,10 +423,11 @@ if(document.querySelector("#catalogo")!=null){
 }
 
 /* funcion para mostrar productos */
-function mostrarProductos(){
+function mostrarProductosxArray(arrayparamostrar){
     const produ= document.querySelector("#productos")
     produ.innerHTML=""
-    productos.forEach(e =>{
+    arrayparamostrar.forEach(e =>{
+        
         produ.innerHTML+=`<div class="card m-3 col-4 p-1 centrar" style="width: 18rem;">
                             <img src="${e.imagen}" class="card-img-top" alt="...">                            
                             <div class="card-body">
@@ -432,7 +441,7 @@ function mostrarProductos(){
 }
 
 /* Funcion para ordenar productos */
-function ordenarProductos(ordenar){
+/* function ordenarProductos(ordenar){
     switch(ordenar){
         case "PrecioAs":
             productos.sort((a,b)=>{
@@ -464,10 +473,10 @@ function ordenarProductos(ordenar){
             break;
     }
     mostrarProductos()
-}
+} */
 
 /* funcion para filtrar productos x categoria */
-function filtrarCategorias(categoria){
+/* function filtrarCategorias(categoria){
     
     switch(categoria){
         case "naruto":
@@ -498,7 +507,7 @@ function filtrarCategorias(categoria){
     }
     mostrarProductos()
     
-}
+} */
 /*==============================================================================================================
 FIN CODIGO PRODUCTOS
 ================================================================================================================ */
