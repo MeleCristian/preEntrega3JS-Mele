@@ -39,10 +39,10 @@
         <section class="container-fluid" id="catalogo">
             <div id="filtros">
                 <select class="form-select form-select-lg mb-3 filtrarPor" aria-label=".form-select-lg example">
-                    <option selected value="categorias">Categorias</option>
-                    <option value="naruto">naruto</option>
-                    <option value="dragon ball">dragon ball</option>
-                    <option value="one piece">one piece</option>
+                    <option selected value="categorias">Anime</option>
+                    <option value="naruto">Naruto</option>
+                    <option value="dragon ball">Dragon ball</option>
+                    <option value="one piece">One piece</option>
                 </select>
                 
                 <select class="form-select form-select-sm ordenarPor" aria-label=".form-select-sm example">
@@ -57,9 +57,11 @@
             <div id="productos" class="row"></div>
 
             <!-- Boton sticky del carrito -->
-            <img  class="sticky modal-carrito"data-bs-toggle="modal" data-bs-target="#exampleModal" 
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHuKTE-ieefw2aN8wJ8GI7QlwNUSfB3DHq2A&usqp=CAU" alt="" data-bs-toggle="modal" 
-            data-bs-target="#exampleModal">
+            <div class="sticky  modal-carrito"data-bs-toggle="modal" data-bs-target="#exampleModal" 
+            alt="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <p class="cantCarrito"></p>
+            </div>
+            
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

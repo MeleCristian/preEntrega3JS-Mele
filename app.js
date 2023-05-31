@@ -1,14 +1,18 @@
 let productos  =[]
 let usuarios=[]
 
+
+/* funcion para Mostrar Los productos en el json */
 const mostrarProductos=async()=>{
-    const resp=await fetch("/data.json")
+    const resp=await fetch("https://melecristian.github.io/preEntrega3JS-Mele/data.json")
     const data= await resp.json()
     productos=[...data.productos]
     mostrarProductosxArray(productos)
     
 }
-const ordenarProductos=async(ordenar)=>{
+
+/* funcion para ordenar los productos y filtrarlos */
+const ordenarProductos=async(ordenar,categorias)=>{
     switch(ordenar){
         case "PrecioAs":
             productos.sort((a,b)=>{
@@ -39,12 +43,7 @@ const ordenarProductos=async(ordenar)=>{
         default:
             break;
     }
-    console.log(productos)
-    mostrarProductosxArray(productos)
-}
-const filtrarCategorias=async(categoria)=>{
-    console.log(productos)
-    switch(categoria){
+    switch(categorias){
         case "naruto":
             obtenerJson()
             productos=productos.filter(e=>{
@@ -67,15 +66,14 @@ const filtrarCategorias=async(categoria)=>{
             })
             break;
         case "categorias":
-            obtenerJson()
+            
         default:
             break;
     }
-    console.log(productos)
-    mostrarProductosxArray(productos)
-    /* obtenerJson() */
     
+    mostrarProductosxArray(productos)
 }
+
 const obtenerJson= async()=>{
     const resp=await fetch("/data.json")
     const data= await resp.json()
@@ -103,7 +101,8 @@ function setearUsuario(){
     }
 }
 setearUsuario()
-habilitarCompra()
+
+
 /* Habilita la compra si hay un usuario conectado */
 function habilitarCompra(){
     const textoDesconectado= document.querySelector(".txt-desconectado")
@@ -117,7 +116,7 @@ function habilitarCompra(){
     }
     
 }
-
+habilitarCompra()
 
 
 
@@ -245,6 +244,7 @@ INICIO CODIGO CARRITO
 
 /* Funcion para mostrar el carrito! */
 function mostrarCarrito(){
+    var cantProductos=0
     const mostrarCarrito=document.querySelector(".carrito")
     mostrarCarrito.innerHTML=' '
     const total= document.querySelector(".total")
@@ -263,10 +263,12 @@ function mostrarCarrito(){
                                         <button class="btn btn-danger col-2 btn-eliminar">Eliminar</button>                                    
                                         </div>`
             suma+=e.total
+            cantProductos++
         })
         total.innerHTML= suma
     }
-
+    const numeroCarrito=document.querySelector(".cantCarrito")
+    numeroCarrito.innerHTML=cantProductos
 }
 
 
@@ -346,6 +348,7 @@ btnComprar.addEventListener("click", e=>{
 
 /* Carrito modal para el index y el  catalogo */
 if(document.querySelector(".modal-carrito")!=null){
+    mostrarCarrito()
     const carro=document.querySelector(".modal-carrito")
     carro.addEventListener("click", e=>{
         mostrarCarrito()
@@ -378,6 +381,7 @@ function agregarCarrito(element){
     
     carritoJson=JSON.stringify(carrito)
     localStorage.setItem("carrito", carritoJson)
+    mostrarCarrito()
     
 }
 
@@ -412,13 +416,9 @@ if(document.querySelector("#catalogo")!=null){
     })
     const clickFiltros= document.querySelector("#filtros")
     clickFiltros.addEventListener("change", e=>{
-        if(e.target.classList.contains("ordenarPor")){
-            ordenarProductos(e.target.value)
-        }
-        if(e.target.classList.contains("filtrarPor")){
-            filtrarCategorias(e.target.value)
-            
-        }
+        const filtro=document.querySelector(".filtrarPor").value
+        const orden=document.querySelector(".ordenarPor").value
+        ordenarProductos(orden,filtro)
     })
 }
 
