@@ -108,7 +108,7 @@ setearUsuario()
 function habilitarCompra(){
     const textoDesconectado= document.querySelector(".txt-desconectado")
     const botonComprar=document.querySelector("#comprar")
-    if(sessionStorage.getItem("usuario")!=null){
+    if(sessionStorage.getItem("usuario")!=null && localStorage.getItem("carrito")!=null){
         textoDesconectado.classList.add("oculto")
         botonComprar.classList.remove("disabled")
     }else{
@@ -326,15 +326,9 @@ function sumaResta(element, a){
 if(document.querySelector(".carrito")!=null){
     const carro= document.querySelector(".carrito")
     carro.addEventListener("click",e=>{
-        if(e.target.classList.contains("btn-restar")){
-            sumaResta(e.target.parentElement, "resta")
-        }
-        if(e.target.classList.contains("btn-sumar")){
-            sumaResta(e.target.parentElement, "suma")
-        }
-        if(e.target.classList.contains("btn-eliminar")){
-            eliminarDelCarrito(e.target.parentElement)
-        }
+        e.target.classList.contains("btn-restar")? sumaResta(e.target.parentElement, "resta"):""
+        e.target.classList.contains("btn-sumar")?sumaResta(e.target.parentElement, "suma"):""
+        e.target.classList.contains("btn-eliminar")?eliminarDelCarrito(e.target.parentElement):""
     })
     const vaciar= document.querySelector(".btn-vaciar")
     vaciar.addEventListener("click", e=>{
@@ -363,6 +357,7 @@ if(document.querySelector(".modal-carrito")!=null){
 
 /* Funcion agragar al carrito */
 function agregarCarrito(element){
+    
     var aux=true
     const nombreElemento=element.querySelector(".card-title").textContent
     const precioElemento=Number(element.querySelector(".card-text").textContent)
@@ -387,15 +382,34 @@ function agregarCarrito(element){
     carritoJson=JSON.stringify(carrito)
     localStorage.setItem("carrito", carritoJson)
     mostrarCarrito()
+    habilitarCompra()
+    Toastify({
+
+        text: `Agregaste ${nombreElemento} al carrito!`,
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        duration: 1500
+        
+        }).showToast();
     
 }
 
 
 function comprar(){
-    alert(`Gracias por haber comprando. Dentro de los proximos 5 dias habiles su pedido estara en su casa`)
+    Toastify({
+        position:"center",
+        text: `Gracias por elegir 3D Printer Store, su pedido llegara dentro de los proximos 5 dias habiles`,
+        style: {
+            background: "blue",
+        },
+        duration: 2000
+        
+        }).showToast();
     carrito=[]
     localStorage.removeItem("carrito")
     mostrarCarrito()
+    habilitarCompra()
 }
 /*==============================================================================================================
 FIN CODIGO CARRITO
@@ -445,74 +459,7 @@ function mostrarProductosxArray(arrayparamostrar){
     })
 }
 
-/* Funcion para ordenar productos */
-/* function ordenarProductos(ordenar){
-    switch(ordenar){
-        case "PrecioAs":
-            productos.sort((a,b)=>{
-                return a.precio-b.precio
-            })
-            break;
-        case "PrecioDes":
-            productos.sort((a,b)=>{
-                return b.precio-a.precio
-            })
-            break;
-        case "NombreAs":
-            productos.sort((a,b)=>{
-                if(a.nombre<b.nombre){return -1}
-                if(a.nombre>b.nombre){return 1}
-                return 0
-                
-            })
-            break;
-        case "NombreDes":
-            productos.sort((a,b)=>{
-                if(a.nombre<b.nombre){return 1}
-                if(a.nombre>b.nombre){return -1}
-                return 0
-                
-            })
-            break;
-        default:
-            break;
-    }
-    mostrarProductos()
-} */
 
-/* funcion para filtrar productos x categoria */
-/* function filtrarCategorias(categoria){
-    
-    switch(categoria){
-        case "naruto":
-            productos=productosOriginales.slice();
-            productos=productos.filter(e=>{
-                if(e.categorias=="naruto")
-                { return true}
-            })
-            break;
-        case "one piece":
-            productos=productosOriginales.slice();
-            productos=productos.filter(e=>{
-                if(e.categorias=="onepiece")
-                { return true}
-            })
-            break;
-        case "dragon ball":
-            productos=productosOriginales.slice();
-            productos=productos.filter(e=>{
-                if(e.categorias=="dragonball")
-                { return true}
-            })
-            break;
-        case "categorias":
-            productos=productosOriginales
-        default:
-            break;
-    }
-    mostrarProductos()
-    
-} */
 /*==============================================================================================================
 FIN CODIGO PRODUCTOS
 ================================================================================================================ */

@@ -87,3 +87,6 @@ section{
 .btn{
     height: 50px;
 }
+.navbar-toggler {
+    background-color: #C0FEFC;
+}
